@@ -17,4 +17,26 @@ describe 'InputValidator' do
 		end
 	end
 
+	context 'when validating individual lines of input,' do
+
+		it 'should not accept no spaces' do
+			input_validator = InputValidator.new
+			expect(input_validator.validate_line('I56')).to eq('Error')
+		end
+
+		it 'should not accept more than one consecutive space' do
+			input_validator = InputValidator.new
+			expect(input_validator.validate_line('I 5  6')).to eq('Error')
+		end
+
+		it 'should only accept I, C, L, V, S as the first character' do
+			invalid_letters = ('A'..'Z').to_a - ['I', 'C', 'L', 'V', 'S']
+			invalid_numbers = ('1'..'9').to_a
+			invalid_first_characters = invalid_letters + invalid_numbers
+			input_validator = InputValidator.new
+			invalid_first_characters.each {|character| expect(input_validator.validate_line(character)).to eq('Error')}
+		end
+
+	end
+
 end
