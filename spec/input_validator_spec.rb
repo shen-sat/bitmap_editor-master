@@ -1,7 +1,7 @@
 require_relative '../lib/input_validator'
 
 describe 'InputValidator' do
-	#TODO trailing spaces?
+	#TODO spaces before and after trailing spaces - use chomp
 	#TODO lowercase input?
 
 	context 'when validating individual characters,' do
@@ -16,6 +16,10 @@ describe 'InputValidator' do
 
 		it 'should not accept 0' do
 			expect(input_validator.validate_character('0')).to eq('Error')
+		end
+
+		it 'should not accept lowercase letters' do
+			expect(input_validator.validate_character('i')).to eq('Error')
 		end
 	end
 
