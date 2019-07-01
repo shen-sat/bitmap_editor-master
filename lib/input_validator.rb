@@ -7,7 +7,7 @@ class InputValidator
 	end
 
 	def validate_line(line)
-		if line[0] =~ /[^ICLVS]/
+		if line[0] =~ /[^ICLVHS]/
 			return 'Error'
 		end
 		if line =~ /  /

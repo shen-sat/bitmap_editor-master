@@ -32,7 +32,7 @@ describe 'InputValidator' do
 		end
 
 		it 'should only accept I, C, L, V, S as the first character' do
-			invalid_letters = ('A'..'Z').to_a - ['I', 'C', 'L', 'V', 'S']
+			invalid_letters = ('A'..'Z').to_a - ['I', 'C', 'L', 'V', 'H', 'S']
 			invalid_numbers = ('1'..'9').to_a
 			invalid_first_characters = invalid_letters + invalid_numbers
 			input_validator = InputValidator.new
