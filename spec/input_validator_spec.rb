@@ -10,12 +10,15 @@ describe 'InputValidator' do
 			expect(input_validator.validate_line('I A B')).to eq('Error')
 			expect(input_validator.validate_line('I 5')).to eq('Error')
 			expect(input_validator.validate_line('I 5 6 6')).to eq('Error')
+			expect(input_validator.validate_line('I 5 6')).to_not eq('Error')
+
 		end
 
 		it 'should only accept a single C' do
 			input_validator = InputValidator.new
 			expect(input_validator.validate_line('C A')).to eq('Error')
 			expect(input_validator.validate_line('C 1')).to eq('Error')
+			expect(input_validator.validate_line('C')).to_not eq('Error')
 		end
 
 		it 'should only accept two numbers and a letter following an L' do
@@ -26,6 +29,7 @@ describe 'InputValidator' do
 			expect(input_validator.validate_line('L 1 3')).to eq('Error')
 			expect(input_validator.validate_line('L 1 3 A C')).to eq('Error')
 			expect(input_validator.validate_line('L 1 3 A 5')).to eq('Error')
+			expect(input_validator.validate_line('L 1 3 A')).to_not eq('Error')
 		end
 
 		it 'should only accept three numbers and a letter following a V' do
@@ -38,24 +42,27 @@ describe 'InputValidator' do
 			expect(input_validator.validate_line('V 2 3 6 5')).to eq('Error')
 			expect(input_validator.validate_line('V 2 3 6 W A')).to eq('Error')
 			expect(input_validator.validate_line('V 2 3 6 W 9')).to eq('Error')
+			expect(input_validator.validate_line('V 2 3 6 W')).to_not eq('Error')
 		end
 
 		it 'should only accept three numbers and a letter following an H' do
 			input_validator = InputValidator.new
 			expect(input_validator.validate_line('H A')).to eq('Error')
-			expect(input_validator.validate_line('H 2')).to eq('Error')
-			expect(input_validator.validate_line('H 2 A')).to eq('Error')
-			expect(input_validator.validate_line('H 2 3')).to eq('Error')
-			expect(input_validator.validate_line('H 2 3 A')).to eq('Error')
-			expect(input_validator.validate_line('H 2 3 6 5')).to eq('Error')
-			expect(input_validator.validate_line('H 2 3 6 W A')).to eq('Error')
-			expect(input_validator.validate_line('H 2 3 6 W 9')).to eq('Error')
+			expect(input_validator.validate_line('H 3')).to eq('Error')
+			expect(input_validator.validate_line('H 3 A')).to eq('Error')
+			expect(input_validator.validate_line('H 3 5')).to eq('Error')
+			expect(input_validator.validate_line('H 3 5 A')).to eq('Error')
+			expect(input_validator.validate_line('H 3 5 2 5')).to eq('Error')
+			expect(input_validator.validate_line('H 3 5 2 Z A')).to eq('Error')
+			expect(input_validator.validate_line('H 3 5 2 Z 9')).to eq('Error')
+			expect(input_validator.validate_line('H 3 5 2 Z')).to_not eq('Error')
 		end
 
 		it 'should only accept a single S' do
 			input_validator = InputValidator.new
 			expect(input_validator.validate_line('S A')).to eq('Error')
 			expect(input_validator.validate_line('S 1')).to eq('Error')
+			expect(input_validator.validate_line('S')).to_not eq('Error')
 		end
 
 		it 'should not accept symbols' do
@@ -87,8 +94,10 @@ describe 'InputValidator' do
 
 		it 'should only accept numbers between 1 and 250' do
 			input_validator = InputValidator.new
-			lines_with_out_of_bounds_numbers = ['I 251 6', 'L 1 0 C', 'V 2 300 6 W', 'H 3 5 0 Z']
+			lines_with_out_of_bounds_numbers = ['I 251 6', 'L 10 0 C', 'V 2 300 6 W', 'H 3 5 0 Z']
+			lines_with_within_bounds_numbers = ['I 250 6', 'L 10 1 C', 'V 1 1 1 W', 'H 250 250 250 Z']
 			lines_with_out_of_bounds_numbers.each {|line| expect(input_validator.validate_line(line)).to eq('Error')}
+			lines_with_within_bounds_numbers.each {|line| expect(input_validator.validate_line(line)).to_not eq('Error')}
 		end
 
 	end
