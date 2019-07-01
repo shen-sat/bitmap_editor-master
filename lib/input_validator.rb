@@ -23,5 +23,10 @@ class InputValidator
 				return 'Error'	
 			end
 		end
+		if line[0] == 'C'
+			if line !~ /^C$/
+				return 'Error'	
+			end
+		end
 	end
 end

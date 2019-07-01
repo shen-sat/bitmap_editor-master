@@ -1,6 +1,7 @@
 require_relative '../lib/input_validator'
 
 describe 'InputValidator' do
+	#TODO trailing spaces?
 
 	context 'when validating individual characters,' do
 		
@@ -43,7 +44,12 @@ describe 'InputValidator' do
 			expect(input_validator.validate_line('I A B')).to eq('Error')
 			expect(input_validator.validate_line('I 5')).to eq('Error')
 			expect(input_validator.validate_line('I 5 6 6')).to eq('Error')
+		end
 
+		it 'should only accept a single C' do
+			input_validator = InputValidator.new
+			expect(input_validator.validate_line('C A')).to eq('Error')
+			expect(input_validator.validate_line('C 1')).to eq('Error')
 		end
 
 	end
