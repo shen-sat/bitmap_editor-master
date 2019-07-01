@@ -33,6 +33,11 @@ class InputValidator
 				return 'Error'	
 			end
 		end
+		if line[0] == 'V'
+			if line !~ /^V [1-9] [1-9] [1-9] [A-Z]$/
+				return 'Error'	
+			end
+		end
 
 	end
 end
