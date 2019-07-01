@@ -2,6 +2,7 @@ require_relative '../lib/input_validator'
 
 describe 'InputValidator' do
 	#TODO trailing spaces?
+	#TODO lowercase input?
 
 	context 'when validating individual characters,' do
 		
@@ -50,6 +51,16 @@ describe 'InputValidator' do
 			input_validator = InputValidator.new
 			expect(input_validator.validate_line('C A')).to eq('Error')
 			expect(input_validator.validate_line('C 1')).to eq('Error')
+		end
+
+		it 'should only accept two numbers and a letter following an L' do
+			input_validator = InputValidator.new
+			expect(input_validator.validate_line('L A')).to eq('Error')
+			expect(input_validator.validate_line('L 1')).to eq('Error')
+			expect(input_validator.validate_line('L 1 A')).to eq('Error')
+			expect(input_validator.validate_line('L 1 3')).to eq('Error')
+			expect(input_validator.validate_line('L 1 3 A C')).to eq('Error')
+			expect(input_validator.validate_line('L 1 3 A 5')).to eq('Error')
 		end
 
 	end

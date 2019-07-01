@@ -28,5 +28,11 @@ class InputValidator
 				return 'Error'	
 			end
 		end
+		if line[0] == 'L'
+			if line !~ /^L [1-9] [1-9] [A-Z]$/
+				return 'Error'	
+			end
+		end
+
 	end
 end
