@@ -85,6 +85,12 @@ describe 'InputValidator' do
 			invalid_first_characters.each {|character| expect(input_validator.validate_line(character)).to eq('Error')}
 		end
 
+		it 'should only accept numbers between 1 and 250' do
+			input_validator = InputValidator.new
+			lines_with_out_of_bounds_numbers = ['I 251 6', 'L 1 0 C', 'V 2 300 6 W', 'H 3 5 0 Z']
+			lines_with_out_of_bounds_numbers.each {|line| expect(input_validator.validate_line(line)).to eq('Error')}
+		end
+
 	end
 
 end
