@@ -43,6 +43,10 @@ class InputValidator
 				return 'Error'	
 			end
 		end
-
+		if line[0] == 'S'
+			if line !~ /^S$/
+				return 'Error'	
+			end
+		end
 	end
 end

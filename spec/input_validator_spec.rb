@@ -87,6 +87,12 @@ describe 'InputValidator' do
 			expect(input_validator.validate_line('H 2 3 6 W 9')).to eq('Error')
 		end
 
+		it 'should only accept a single S' do
+			input_validator = InputValidator.new
+			expect(input_validator.validate_line('S A')).to eq('Error')
+			expect(input_validator.validate_line('S 1')).to eq('Error')
+		end
+
 	end
 
 end
