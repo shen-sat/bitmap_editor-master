@@ -18,5 +18,10 @@ class InputValidator
 				return 'Error'
 			end
 		end
+		if line[0] == 'I'
+			if line !~ /^I [1-9] [1-9]$/
+				return 'Error'	
+			end
+		end
 	end
 end

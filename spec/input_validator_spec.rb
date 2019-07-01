@@ -37,6 +37,15 @@ describe 'InputValidator' do
 			invalid_first_characters.each {|character| expect(input_validator.validate_line(character)).to eq('Error')}
 		end
 
+		it 'should only accept two numbers following an I' do
+			input_validator = InputValidator.new
+			expect(input_validator.validate_line('I A')).to eq('Error')
+			expect(input_validator.validate_line('I A B')).to eq('Error')
+			expect(input_validator.validate_line('I 5')).to eq('Error')
+			expect(input_validator.validate_line('I 5 6 6')).to eq('Error')
+
+		end
+
 	end
 
 end
