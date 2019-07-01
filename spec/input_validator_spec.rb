@@ -1,47 +1,8 @@
 require_relative '../lib/input_validator'
 
 describe 'InputValidator' do
-	#TODO spaces before and after trailing spaces - use chomp
-	#TODO lowercase input?
-
-	context 'when validating individual characters,' do
-		
-		input_validator = InputValidator.new
-		
-		it 'should not accept symbols' do
-			#TODO how to test a range of symbols?
-			symbols = ['.', ',']
-			symbols.each {|symbol| expect(input_validator.validate_character(symbol)).to eq('Error') }
-		end
-
-		it 'should not accept 0' do
-			expect(input_validator.validate_character('0')).to eq('Error')
-		end
-
-		it 'should not accept lowercase letters' do
-			expect(input_validator.validate_character('i')).to eq('Error')
-		end
-	end
 
 	context 'when validating individual lines of input,' do
-
-		it 'should not accept no spaces' do
-			input_validator = InputValidator.new
-			expect(input_validator.validate_line('I56')).to eq('Error')
-		end
-
-		it 'should not accept more than one consecutive space' do
-			input_validator = InputValidator.new
-			expect(input_validator.validate_line('I 5  6')).to eq('Error')
-		end
-
-		it 'should only accept I, C, L, V, S as the first character' do
-			invalid_letters = ('A'..'Z').to_a - ['I', 'C', 'L', 'V', 'H', 'S']
-			invalid_numbers = ('1'..'9').to_a
-			invalid_first_characters = invalid_letters + invalid_numbers
-			input_validator = InputValidator.new
-			invalid_first_characters.each {|character| expect(input_validator.validate_line(character)).to eq('Error')}
-		end
 
 		it 'should only accept two numbers following an I' do
 			input_validator = InputValidator.new
@@ -95,6 +56,33 @@ describe 'InputValidator' do
 			input_validator = InputValidator.new
 			expect(input_validator.validate_line('S A')).to eq('Error')
 			expect(input_validator.validate_line('S 1')).to eq('Error')
+		end
+
+		it 'should not accept symbols' do
+			input_validator = InputValidator.new
+			lines_with_symbols = ['I . 6', 'C ?', 'L 1 , C', 'V 2 3 - W', 'H 3 5 2 +', '! S']
+			lines_with_symbols.each {|line| expect(input_validator.validate_line(line)).to eq('Error')}
+		end
+
+		it 'should not accept lowercase letters' do
+			input_validator = InputValidator.new
+			lines_with_lowercase_letters = ['i 5 6', 'c', 'l 1 3 C', 'v 2 3 6 W', 'H 3 5 2 z', 's']
+			lines_with_lowercase_letters.each {|line| expect(input_validator.validate_line(line)).to eq('Error')}
+		end
+
+		it 'should not accept double spaces' do
+			input_validator = InputValidator.new
+			lines_with_lowercase_letters = ['I  5 6', 'C  ', 'L 1  3 C', 'V 2 3  6 W', 'H 3 5 2  Z', '  S']
+			lines_with_lowercase_letters.each {|line| expect(input_validator.validate_line(line)).to eq('Error')}
+		end
+
+		it 'should only accept I, C, L, V, S as the first character' do
+			invalid_letters = ('A'..'Z').to_a - ['I', 'C', 'L', 'V', 'H', 'S']
+			numbers = ('1'..'9').to_a
+			space = [" "]
+			invalid_first_characters = invalid_letters + numbers + space
+			input_validator = InputValidator.new
+			invalid_first_characters.each {|character| expect(input_validator.validate_line(character)).to eq('Error')}
 		end
 
 	end
