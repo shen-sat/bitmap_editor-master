@@ -7,9 +7,10 @@ describe 'InputValidator' do
 		it 'should only accept two numbers following an I' do
 			input_validator = InputValidator.new
 			expect(input_validator.validate_line('I A')).to eq('Error')
-			expect(input_validator.validate_line('I A B')).to eq('Error')
 			expect(input_validator.validate_line('I 5')).to eq('Error')
+			expect(input_validator.validate_line('I 5 B')).to eq('Error')
 			expect(input_validator.validate_line('I 5 6 6')).to eq('Error')
+			expect(input_validator.validate_line('I 5 6 A')).to eq('Error')
 			expect(input_validator.validate_line('I 5 6')).to_not eq('Error')
 
 		end
@@ -25,7 +26,7 @@ describe 'InputValidator' do
 			input_validator = InputValidator.new
 			expect(input_validator.validate_line('L A')).to eq('Error')
 			expect(input_validator.validate_line('L 1')).to eq('Error')
-			expect(input_validator.validate_line('L 1 A')).to eq('Error')
+			expect(input_validator.validate_line('L 1 B')).to eq('Error')
 			expect(input_validator.validate_line('L 1 3')).to eq('Error')
 			expect(input_validator.validate_line('L 1 3 A C')).to eq('Error')
 			expect(input_validator.validate_line('L 1 3 A 5')).to eq('Error')
@@ -39,7 +40,8 @@ describe 'InputValidator' do
 			expect(input_validator.validate_line('V 2 A')).to eq('Error')
 			expect(input_validator.validate_line('V 2 3')).to eq('Error')
 			expect(input_validator.validate_line('V 2 3 A')).to eq('Error')
-			expect(input_validator.validate_line('V 2 3 6 5')).to eq('Error')
+			expect(input_validator.validate_line('V 2 3 6')).to eq('Error')
+			expect(input_validator.validate_line('V 2 3 6 7')).to eq('Error')
 			expect(input_validator.validate_line('V 2 3 6 W A')).to eq('Error')
 			expect(input_validator.validate_line('V 2 3 6 W 9')).to eq('Error')
 			expect(input_validator.validate_line('V 2 3 6 W')).to_not eq('Error')
@@ -52,7 +54,8 @@ describe 'InputValidator' do
 			expect(input_validator.validate_line('H 3 A')).to eq('Error')
 			expect(input_validator.validate_line('H 3 5')).to eq('Error')
 			expect(input_validator.validate_line('H 3 5 A')).to eq('Error')
-			expect(input_validator.validate_line('H 3 5 2 5')).to eq('Error')
+			expect(input_validator.validate_line('H 3 5 2')).to eq('Error')
+			expect(input_validator.validate_line('H 3 5 2 7')).to eq('Error')
 			expect(input_validator.validate_line('H 3 5 2 Z A')).to eq('Error')
 			expect(input_validator.validate_line('H 3 5 2 Z 9')).to eq('Error')
 			expect(input_validator.validate_line('H 3 5 2 Z')).to_not eq('Error')

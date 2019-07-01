@@ -1,38 +1,32 @@
 class InputValidator
 
 	def validate_line(line)
-		if line[0] =~ /[^ICLVHS]/
-			return 'Error'
-		end
 		if line[0] == 'I'
 			if line !~ /^I ([1-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|250) ([1-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|250)$/
 				return 'Error'	
 			end
-		end
-		if line[0] == 'C'
+		elsif line[0] == 'C'
 			if line !~ /^C$/
 				return 'Error'	
 			end
-		end
-		if line[0] == 'L'
+		elsif line[0] == 'L'
 			if line !~ /^L ([1-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|250) ([1-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|250) [A-Z]$/
 				return 'Error'	
 			end
-		end
-		if line[0] == 'V'
+		elsif line[0] == 'V'
 			if line !~ /^V ([1-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|250) ([1-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|250) ([1-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|250) [A-Z]$/
 				return 'Error'	
 			end
-		end
-		if line[0] == 'H'
+		elsif line[0] == 'H'
 			if line !~ /^H ([1-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|250) ([1-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|250) ([1-9]|[1-8][0-9]|9[0-9]|1[0-9]{2}|2[0-4][0-9]|250) [A-Z]$/
 				return 'Error'	
 			end
-		end
-		if line[0] == 'S'
+		elsif line[0] == 'S'
 			if line !~ /^S$/
 				return 'Error'	
 			end
+		else
+			return 'Error'
 		end
 	end
 end
