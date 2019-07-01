@@ -75,6 +75,18 @@ describe 'InputValidator' do
 			expect(input_validator.validate_line('V 2 3 6 W 9')).to eq('Error')
 		end
 
+		it 'should only accept three numbers and a letter following an H' do
+			input_validator = InputValidator.new
+			expect(input_validator.validate_line('H A')).to eq('Error')
+			expect(input_validator.validate_line('H 2')).to eq('Error')
+			expect(input_validator.validate_line('H 2 A')).to eq('Error')
+			expect(input_validator.validate_line('H 2 3')).to eq('Error')
+			expect(input_validator.validate_line('H 2 3 A')).to eq('Error')
+			expect(input_validator.validate_line('H 2 3 6 5')).to eq('Error')
+			expect(input_validator.validate_line('H 2 3 6 W A')).to eq('Error')
+			expect(input_validator.validate_line('H 2 3 6 W 9')).to eq('Error')
+		end
+
 	end
 
 end
