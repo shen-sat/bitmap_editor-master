@@ -1,4 +1,5 @@
 require_relative '../lib/input_validator'
+#TODO raise errors for input
 
 describe 'InputValidator' do
 
