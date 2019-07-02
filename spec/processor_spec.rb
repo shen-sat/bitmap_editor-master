@@ -65,11 +65,25 @@ describe 'Processor' do
 		expect(processor.table).to eq([['Z', 'B', 'C'], ['Z', 'E', 'F'], ['Z', 'H', 'I']])
 	end
 
-	it 'should convert two-thirds of the last column to "Z" for the input V312Z' do
+	it 'should convert first two-thirds of the last column to "Z" for the input V312Z' do
 		processor = Processor.new
 		processor.table = [['A', 'B', 'C'], ['D', 'E', 'F'], ['G', 'H', 'I']]
 		processor.process('V312Z')
 		expect(processor.table).to eq([['A', 'B', 'Z'], ['D', 'E', 'Z'], ['G', 'H', 'I']])
+	end
+
+	it 'should convert the first row to "Z" for the input H131' do
+		processor = Processor.new
+		processor.table = [['A', 'B', 'C'], ['D', 'E', 'F'], ['G', 'H', 'I']]
+		processor.process('H131Z')
+		expect(processor.table).to eq([['Z', 'Z', 'Z'], ['D', 'E', 'F'], ['G', 'H', 'I']])
+	end
+
+	it 'should convert last two-thirds of the middle row to "Z" for the input H232Z' do
+		processor = Processor.new
+		processor.table = [['A', 'B', 'C'], ['D', 'E', 'F'], ['G', 'H', 'I']]
+		processor.process('H232Z')
+		expect(processor.table).to eq([['A', 'B', 'C'], ['D', 'Z', 'Z'], ['G', 'H', 'I']])
 	end
 
 
