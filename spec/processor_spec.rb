@@ -1,5 +1,4 @@
 require_relative '../lib/processor'
-#TODO Double digits eg a grid that is 250x250
 #TODO lines are out-of-bounds
 #TODO what happens if I input is not first? If @table is empty, store commands, then run them at the end
 #TODO warning if 'C' command has inout after it
@@ -99,6 +98,13 @@ describe 'Processor' do
 		processor.process('V 4 2 4 Y')
 		processor.process('H 1 3 2 Z')
 		expect(processor.table).to eq([['O','O','O','O'],['Z','Z','Z','Y'],['O','X','O','Y'],['O','O','O','Y']])
+	end
+
+	it 'should handle drawing vertical lines from bottom to top' do
+		processor = Processor.new
+		processor.table = [['O','O','O'], ['O','O','O'], ['O','O','O']]
+		processor.process('V 3 3 2 Z')
+		expect(processor.table).to eq([['O','O','O'],['O','O','Z'],['O','O','Z']])
 	end
 
 

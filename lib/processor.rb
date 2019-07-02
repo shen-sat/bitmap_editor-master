@@ -10,9 +10,7 @@ class Processor
 		when 'I'
 			number_of_columns = line.split(/ /)[1].to_i
 			number_of_rows = line.split(/ /)[2].to_i
-			single_row = []
-			number_of_columns.times { single_row << 'O' }
-			number_of_rows.times { @table << Array.new(single_row) }
+			number_of_rows.times { @table << Array.new(Array.new(number_of_columns, 'O')) }
 		when 'C'
 			@table.each do |row|
 				row.collect! { |pixel| pixel = 'O' }
@@ -24,8 +22,14 @@ class Processor
 			@table[row_index][column_index] = color
 		when 'V'
 			column_index = line.split(/ /)[1].to_i - 1
-			row_index_start = line.split(/ /)[2].to_i - 1
-			row_index_finish = line.split(/ /)[3].to_i - 1 
+			if line.split(/ /)[2].to_i < line.split(/ /)[3].to_i
+				row_index_start = line.split(/ /)[2].to_i - 1
+				row_index_finish = line.split(/ /)[3].to_i - 1 
+			else
+				row_index_start = line.split(/ /)[3].to_i - 1
+				row_index_finish = line.split(/ /)[2].to_i - 1 
+			end 
+			
 			color = line.split(/ /)[4]
 			(row_index_start..row_index_finish).each { |row_index| @table[row_index][column_index] = color }
 		when 'H'
