@@ -8,4 +8,17 @@ describe 'Processor' do
 		expect(processor.table).to eq([['O']])		
 	end
 
+	it 'should return two arrays within an array, each containing two "O" for input "I22"' do
+		processor = Processor.new
+		processor.process('I22')
+		expect(processor.table).to eq([['O','O'], ['O','O']])		
+	end
+
+
+	it 'should return six arrays within an array, each containing five "O" for input "I56"' do
+		processor = Processor.new
+		processor.process('I56')
+		expect(processor.table).to eq([['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O']])		
+	end
+
 end
