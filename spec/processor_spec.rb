@@ -1,5 +1,12 @@
 require_relative '../lib/processor'
+#TODO Double digits eg a grid that is 250x250
+#TODO multiple lines of inputs
+#TODO lines are out-of-bounds
+#TODO what happens if I input is not first? If @table is empty, store commands, then run them at the end
+#TODO warning if 'C' command has inout after it
+#TODO handle multiple tables ie multiple I inputs - new table for each?
 #TODO what happens with numbers in L, V and H inputs which start with a higher number and then a lower number ie draw line backwards
+#TODO test for 'S' input (another spec)
 
 describe 'Processor' do
 
@@ -84,6 +91,15 @@ describe 'Processor' do
 		processor.table = [['A', 'B', 'C'], ['D', 'E', 'F'], ['G', 'H', 'I']]
 		processor.process('H232Z')
 		expect(processor.table).to eq([['A', 'B', 'C'], ['D', 'Z', 'Z'], ['G', 'H', 'I']])
+	end
+
+	it 'should handle multiple lines of input' do
+		processor = Processor.new
+		processor.process('I44')
+		processor.process('L23X')
+		processor.process('V424Y')
+		processor.process('H132Z')
+		expect(processor.table).to eq([['O','O','O','O'],['Z','Z','Z','Y'],['O','X','O','Y'],['O','O','O','Y']])
 	end
 
 
