@@ -1,4 +1,5 @@
 require_relative '../lib/processor'
+#TODO what happens with numbers in L, V and H inputs which start with a higher number and then a lower number ie draw line backwards
 
 describe 'Processor' do
 
@@ -56,5 +57,20 @@ describe 'Processor' do
 		processor.process('L21Z')
 		expect(processor.table).to eq([['A', 'Z'], ['C', 'D']])
 	end
+
+	it 'should convert the first column to "Z" for the input V113Z' do
+		processor = Processor.new
+		processor.table = [['A', 'B', 'C'], ['D', 'E', 'F'], ['G', 'H', 'I']]
+		processor.process('V113Z')
+		expect(processor.table).to eq([['Z', 'B', 'C'], ['Z', 'E', 'F'], ['Z', 'H', 'I']])
+	end
+
+	it 'should convert two-thirds of the last column to "Z" for the input V312Z' do
+		processor = Processor.new
+		processor.table = [['A', 'B', 'C'], ['D', 'E', 'F'], ['G', 'H', 'I']]
+		processor.process('V312Z')
+		expect(processor.table).to eq([['A', 'B', 'Z'], ['D', 'E', 'Z'], ['G', 'H', 'I']])
+	end
+
 
 end

@@ -23,6 +23,12 @@ class Processor
 			row_index = line[2].to_i - 1
 			color = line[3]
 			@table[row_index][column_index] = color
+		when 'V'
+			column_index = line[1].to_i - 1
+			row_index_start = line[2].to_i - 1
+			row_index_finish = line[3].to_i - 1 
+			color = line[4]
+			(row_index_start..row_index_finish).each { |row_index| @table[row_index][column_index] = color }
 		end
 	end
 end
