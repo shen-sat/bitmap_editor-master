@@ -3,7 +3,6 @@ require_relative '../lib/processor'
 #TODO what happens if I input is not first? If @table is empty, store commands, then run them at the end
 #TODO warning if 'C' command has inout after it
 #TODO handle multiple tables ie multiple I inputs - new table for each?
-#TODO what happens with numbers in L, V and H inputs which start with a higher number and then a lower number ie draw line backwards
 #TODO test for 'S' input (another spec)
 
 describe 'Processor' do
