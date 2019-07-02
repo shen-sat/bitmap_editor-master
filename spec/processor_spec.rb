@@ -21,18 +21,40 @@ describe 'Processor' do
 		expect(processor.table).to eq([['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O']])		
 	end
 
-	it 'should clear a single-pixel coloured table to white for input "C"' do
+	it 'should clear a single-pixel coloured table to all "O" for input "C"' do
 		processor = Processor.new
 		processor.table = [['A']]
 		processor.process('C')
 		expect(processor.table).to eq([['O']])
 	end
 
-	it 'should clear a multi-pixel coloured table to white for input "C"' do
+	it 'should clear a multi-pixel coloured table to to all "O" for input "C"' do
 		processor = Processor.new
-		processor.table = [['A', 'B'], ['C', 'D'], ['E', 'F']]
+		processor.table = [['A', 'B'], ['C', 'D']]
 		processor.process('C')
-		expect(processor.table).to eq([['O', 'O'], ['O', 'O'], ['O', 'O']])
+		expect(processor.table).to eq([['O', 'O'], ['O', 'O']])
+	end
+
+	it 'should convert the first element in the first array to "Z" for input L11Z' do
+		processor = Processor.new
+		processor.table = [['A', 'B'], ['C', 'D']]
+		processor.process('L11Z')
+		expect(processor.table).to eq([['Z', 'B'], ['C', 'D']])
+	end
+
+	it 'should convert the last element in the last array to "Z" for input L22Z' do
+		processor = Processor.new
+		processor.table = [['A', 'B'], ['C', 'D']]
+		processor.process('L22Z')
+		expect(processor.table).to eq([['A', 'B'], ['C', 'Z']])
+	end
+
+
+	it 'should convert the last element in the first array to "Z" for input L12Z' do
+		processor = Processor.new
+		processor.table = [['A', 'B'], ['C', 'D']]
+		processor.process('L21Z')
+		expect(processor.table).to eq([['A', 'Z'], ['C', 'D']])
 	end
 
 end

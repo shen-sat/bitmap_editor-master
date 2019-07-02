@@ -16,12 +16,13 @@ class Processor
 			number_of_rows.times { @table << single_row }
 		when 'C'
 			@table.each do |row|
-				row.collect! do |pixel|
-					pixel = 'O'
-				end
+				row.collect! { |pixel| pixel = 'O' }
 			end
+		when 'L'
+			column_index = line[1].to_i - 1
+			row_index = line[2].to_i - 1
+			color = line[3]
+			@table[row_index][column_index] = color
 		end
-
-
 	end
 end
