@@ -107,5 +107,12 @@ describe 'Processor' do
 		expect(processor.table).to eq([['O','O','O'],['O','O','Z'],['O','O','Z']])
 	end
 
+	it 'should handle drawing horizontal lines from right to left' do
+		processor = Processor.new
+		processor.table = [['O','O','O'], ['O','O','O'], ['O','O','O']]
+		processor.process('H 3 1 2 Z')
+		expect(processor.table).to eq([['O','O','O'],['Z','Z','Z'],['O','O','O']])
+	end
+
 
 end

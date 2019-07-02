@@ -33,8 +33,13 @@ class Processor
 			color = line.split(/ /)[4]
 			(row_index_start..row_index_finish).each { |row_index| @table[row_index][column_index] = color }
 		when 'H'
-			column_index_start = line.split(/ /)[1].to_i - 1
-			column_index_finish = line.split(/ /)[2].to_i - 1
+			if line.split(/ /)[1].to_i < line.split(/ /)[2].to_i
+				column_index_start = line.split(/ /)[1].to_i - 1
+				column_index_finish = line.split(/ /)[2].to_i - 1
+			else
+				column_index_start = line.split(/ /)[2].to_i - 1
+				column_index_finish = line.split(/ /)[1].to_i - 1
+			end 
 			row_index = line.split(/ /)[3].to_i - 1
 			color = line.split(/ /)[4]
 			(column_index_start..column_index_finish).each { |column_index| @table[row_index][column_index] = color }
