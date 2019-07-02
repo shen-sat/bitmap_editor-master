@@ -1,5 +1,5 @@
 class InputValidator
-	#TODO remove spaces from string to feed into processor
+	#TODO remove spaces from string to feed into processor - use .join!
 	def initialize
 		create_grid = Regexp.new(/^I( [1-9]| [1-8][0-9]| 9[0-9]| 1[0-9]{2}| 2[0-4][0-9]| 250){2}$/)
 		clear_grid = Regexp.new(/^C$/)

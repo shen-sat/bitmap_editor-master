@@ -21,4 +21,18 @@ describe 'Processor' do
 		expect(processor.table).to eq([['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O'], ['O','O','O','O','O']])		
 	end
 
+	it 'should clear a single-pixel coloured table to white for input "C"' do
+		processor = Processor.new
+		processor.table = [['A']]
+		processor.process('C')
+		expect(processor.table).to eq([['O']])
+	end
+
+	it 'should clear a multi-pixel coloured table to white for input "C"' do
+		processor = Processor.new
+		processor.table = [['A', 'B'], ['C', 'D'], ['E', 'F']]
+		processor.process('C')
+		expect(processor.table).to eq([['O', 'O'], ['O', 'O'], ['O', 'O']])
+	end
+
 end
