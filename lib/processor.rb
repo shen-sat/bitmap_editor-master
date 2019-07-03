@@ -6,6 +6,7 @@ class Processor
 	end
 
 	def process(line)
+		convert_line = convert_line(line)
 		if line[0] != 'I'
 			check_table_exists
 			check_out_of_bounds(line)
@@ -71,5 +72,12 @@ class Processor
 
 	def check_table_exists
 		raise 'Table not created. Please enter an "I" input at beginning of file' if @table.empty?
+	end
+
+	def convert_line(line)
+		characters = line.split(/ /)
+		characters.collect! do |character|
+			character.match(/\d/) ? character = character.to_i : character
+		end
 	end
 end
