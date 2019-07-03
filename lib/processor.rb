@@ -56,20 +56,20 @@ class Processor
 		case line[0]
 		when 'L'
 			if line.split(/ /)[1].to_i > column_limit || line.split(/ /)[2].to_i > row_limit
-				raise 'Error'
+				raise 'Input is out of bounds of table'
 			end
 		when 'H'
 			if line.split(/ /)[1].to_i > column_limit || line.split(/ /)[2].to_i > column_limit || line.split(/ /)[3].to_i > row_limit
-				raise 'Error'
+				raise 'Input is out of bounds of table'
 			end
 		when 'V'
 			if line.split(/ /)[1].to_i > column_limit || line.split(/ /)[2].to_i > row_limit || line.split(/ /)[3].to_i > row_limit
-				raise 'Error'
+				raise 'Input is out of bounds of table'
 			end
 		end
 	end
 
 	def check_table_exists
-		raise 'Error' if @table.empty?
+		raise 'Table not created. Please enter an "I" input at beginning of file' if @table.empty?
 	end
 end

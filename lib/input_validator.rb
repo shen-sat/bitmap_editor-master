@@ -12,6 +12,6 @@ class InputValidator
 	def validate_line(line)
 		match_found = false
 		@regexes.each { |regex| match_found = true if line.match(regex) }
-		return 'Error' if match_found == false
+		raise 'Incorrect input' if match_found == false
 	end
 end
