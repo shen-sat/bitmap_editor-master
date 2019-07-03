@@ -12,6 +12,7 @@ class Processor
 		end
 		case line[0]
 		when 'I'
+			@table = []
 			number_of_columns = line.split(/ /)[1].to_i
 			number_of_rows = line.split(/ /)[2].to_i
 			number_of_rows.times { @table << Array.new(Array.new(number_of_columns, 'O')) }

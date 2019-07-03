@@ -1,6 +1,4 @@
 require_relative '../lib/processor'
-#TODO warning if 'C' command has inout after it
-#TODO handle multiple tables ie multiple I inputs - new table for each?
 #TODO test for 'S' input (another spec)
 #TODO descriptive error messages
 #TODO process input to turn numbers into numbers, maybe even turn them to read-able hashes?
@@ -144,6 +142,13 @@ describe 'Processor' do
 	it 'should raise an error if table does not exist' do
 		processor = Processor.new
 		expect{ processor.check_table_exists }.to raise_error('Error')
+	end
+
+	it 'should use the last "I" input when given multiple "I" inputs' do
+		processor = Processor.new
+		processor.process('I 1 1')
+		processor.process('I 2 2')
+		expect(processor.table).to eq([['O', 'O'], ['O', 'O']])
 	end
 
 	context 'when calling the "process" method,' do
