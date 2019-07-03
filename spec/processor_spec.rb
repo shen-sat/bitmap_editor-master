@@ -123,9 +123,17 @@ describe 'Processor' do
 	it 'should raise an error if "V" input is out of bounds' do
 		processor = Processor.new
 		processor.table = [['O','O'], ['O','O']]
-		expect(processor.process('V 3 1 2')).to eq('Error')
-		expect(processor.process('V 1 3 2')).to eq('Error')
-		expect(processor.process('V 1 1 3')).to eq('Error')
+		expect(processor.process('V 3 1 2 X')).to eq('Error')
+		expect(processor.process('V 1 3 2 X')).to eq('Error')
+		expect(processor.process('V 1 1 3 X')).to eq('Error')
+	end
+
+	it 'should raise an error if "H" input is out of bounds' do
+		processor = Processor.new
+		processor.table = [['O','O'], ['O','O']]
+		expect(processor.process('H 3 1 2 X')).to eq('Error')
+		expect(processor.process('H 1 3 2 X')).to eq('Error')
+		expect(processor.process('H 1 2 3 X')).to eq('Error')
 	end
 
 

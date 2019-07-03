@@ -38,6 +38,9 @@ class Processor
 			color = line.split(/ /)[4]
 			(row_index_start..row_index_finish).each { |row_index| @table[row_index][column_index] = color }
 		when 'H'
+			if line.split(/ /)[1].to_i > @table[0].size || line.split(/ /)[2].to_i > @table[0].size || line.split(/ /)[3].to_i > @table.size
+				return 'Error'
+			end
 			if line.split(/ /)[1].to_i < line.split(/ /)[2].to_i
 				column_index_start = line.split(/ /)[1].to_i - 1
 				column_index_finish = line.split(/ /)[2].to_i - 1
