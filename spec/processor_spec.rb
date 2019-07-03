@@ -1,6 +1,4 @@
 require_relative '../lib/processor'
-#TODO process input to turn numbers into numbers, maybe even turn them to read-able hashes?
-#TODO test for 'S' input (another spec)
 
 describe 'Processor' do
 
@@ -180,15 +178,5 @@ describe 'Processor' do
 	it 'should convert an input line into an array of letters and integers' do
 		processor = Processor.new
 		expect(processor.convert_line('I 5 6')).to eq(['I',5,6])
-	end
-
-	it 'should call convert_line every time process is called' do
-		processor = Processor.new
-		processor.table = [['O','O'], ['O','O']]
-		expect(processor).to receive(:convert_line).exactly(4).times
-		processor.process('I 5 6')
-		processor.process('V 1 1 2 X')
-		processor.process('H 1 2 1 X')
-		processor.process('L 1 1 X')
 	end
 end
