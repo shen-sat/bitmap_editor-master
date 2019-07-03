@@ -113,5 +113,13 @@ describe 'Processor' do
 		expect(processor.table).to eq([['O','O','O'],['Z','Z','Z'],['O','O','O']])
 	end
 
+	it 'should raise an error if "L" input is out of bounds' do
+		first_processor = Processor.new
+		second_processor = Processor.new
+		first_processor.process('I 4 5')
+		second_processor.process('I 5 4')
+		expect(first_processor.process('L 5 5 X')).to eq('Error')
+		expect(second_processor.process('L 5 5 X')).to eq('Error')
+	end
 
 end

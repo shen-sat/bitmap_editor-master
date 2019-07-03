@@ -19,6 +19,9 @@ class Processor
 			column_index = line.split(/ /)[1].to_i - 1
 			row_index = line.split(/ /)[2].to_i - 1
 			color = line.split(/ /)[3]
+			if line.split(/ /)[1].to_i > @table[0].size || line.split(/ /)[2].to_i > @table.size
+				return 'Error'
+			end 
 			@table[row_index][column_index] = color
 		when 'V'
 			column_index = line.split(/ /)[1].to_i - 1
