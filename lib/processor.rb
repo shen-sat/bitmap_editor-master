@@ -13,41 +13,15 @@ class Processor
 		end
 		case converted_line[0]
 		when 'I'
-			@table = []
-			number_of_columns = converted_line[1]
-			number_of_rows = converted_line[2]
-			number_of_rows.times { @table << Array.new(Array.new(number_of_columns, 'O')) }
+			create_table(converted_line)
 		when 'C'
-			@table.each do |row|
-				row.collect! { |pixel| pixel = 'O' }
-			end
+			clear_table
 		when 'L'
-			column_index = converted_line[1] - 1
-			row_index = converted_line[2] - 1
-			color = converted_line[3] 
-			@table[row_index][column_index] = color
+			draw_pixel(converted_line)
 		when 'V'
-			column_index = converted_line[1] - 1
-			if converted_line[2] < converted_line[3]
-				row_index_start = converted_line[2] - 1
-				row_index_finish = converted_line[3] - 1 
-			else
-				row_index_start = converted_line[3] - 1
-				row_index_finish = converted_line[2] - 1 
-			end 
-			color = converted_line[4]
-			(row_index_start..row_index_finish).each { |row_index| @table[row_index][column_index] = color }
+			draw_vertical_line(converted_line)
 		when 'H'
-			if converted_line[1] < converted_line[2]
-				column_index_start = converted_line[1] - 1
-				column_index_finish = converted_line[2] - 1
-			else
-				column_index_start = converted_line[2] - 1
-				column_index_finish = converted_line[1] - 1
-			end 
-			row_index = converted_line[3] - 1
-			color = converted_line[4]
-			(column_index_start..column_index_finish).each { |column_index| @table[row_index][column_index] = color }
+			draw_horizontal_line(converted_line)
 		end
 	end
 
@@ -79,5 +53,51 @@ class Processor
 		characters.collect! do |character|
 			character.match(/\d/) ? character = character.to_i : character
 		end
+	end
+
+	def create_table(converted_line)
+		@table = []
+		number_of_columns = converted_line[1]
+		number_of_rows = converted_line[2]
+		number_of_rows.times { @table << Array.new(Array.new(number_of_columns, 'O')) }
+	end
+
+	def clear_table
+		@table.each do |row|
+			row.collect! { |pixel| pixel = 'O' }
+		end
+	end
+
+	def draw_pixel(converted_line)
+		column_index = converted_line[1] - 1
+		row_index = converted_line[2] - 1
+		color = converted_line[3] 
+		@table[row_index][column_index] = color
+	end
+
+	def draw_vertical_line(converted_line)
+		column_index = converted_line[1] - 1
+		if converted_line[2] < converted_line[3]
+			row_index_start = converted_line[2] - 1
+			row_index_finish = converted_line[3] - 1 
+		else
+			row_index_start = converted_line[3] - 1
+			row_index_finish = converted_line[2] - 1 
+		end 
+		color = converted_line[4]
+		(row_index_start..row_index_finish).each { |row_index| @table[row_index][column_index] = color }
+	end
+
+	def draw_horizontal_line(converted_line)
+		if converted_line[1] < converted_line[2]
+			column_index_start = converted_line[1] - 1
+			column_index_finish = converted_line[2] - 1
+		else
+			column_index_start = converted_line[2] - 1
+			column_index_finish = converted_line[1] - 1
+		end 
+		row_index = converted_line[3] - 1
+		color = converted_line[4]
+		(column_index_start..column_index_finish).each { |column_index| @table[row_index][column_index] = color }
 	end
 end
