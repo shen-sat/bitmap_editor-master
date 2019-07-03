@@ -7,6 +7,7 @@ class Processor
 
 	def process(line)
 		if line[0] != 'I'
+			check_table_exists
 			check_out_of_bounds(line)
 		end
 		case line[0]
@@ -65,5 +66,9 @@ class Processor
 				raise 'Error'
 			end
 		end
+	end
+
+	def check_table_exists
+		raise 'Error' if @table.empty?
 	end
 end

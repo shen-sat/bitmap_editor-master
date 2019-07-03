@@ -1,5 +1,4 @@
 require_relative '../lib/processor'
-#TODO what happens if I input is not first? If @table is empty, store commands, then run them at the end
 #TODO warning if 'C' command has inout after it
 #TODO handle multiple tables ie multiple I inputs - new table for each?
 #TODO test for 'S' input (another spec)
@@ -137,9 +136,17 @@ describe 'Processor' do
 		expect{ processor.check_out_of_bounds('H 1 2 3 X') }.to raise_error('Error')
 	end
 
-	
+	it 'should initialise with an empty table' do
+		processor = Processor.new
+		expect(processor.table).to eq([])
+	end
 
-	context 'when calling the "process" method' do
+	it 'should raise an error if table does not exist' do
+		processor = Processor.new
+		expect{ processor.check_table_exists }.to raise_error('Error')
+	end
+
+	context 'when calling the "process" method,' do
 
 		it 'should not call the check_out_of_bounds method for "I" lines' do
 			processor = Processor.new
@@ -151,6 +158,15 @@ describe 'Processor' do
 			processor = Processor.new
 			processor.table = [['O','O'], ['O','O']]
 			expect(processor).to receive(:check_out_of_bounds).exactly(3).times
+			processor.process('V 1 1 2 X')
+			processor.process('H 1 2 1 X')
+			processor.process('L 1 1 X')
+		end
+
+		it 'should only call the check_table_exists for non "I" lines' do
+			processor = Processor.new
+			processor.table = [['O','O'], ['O','O']]
+			expect(processor).to receive(:check_table_exists).exactly(3).times
 			processor.process('V 1 1 2 X')
 			processor.process('H 1 2 1 X')
 			processor.process('L 1 1 X')
