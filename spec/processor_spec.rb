@@ -4,6 +4,7 @@ require_relative '../lib/processor'
 #TODO warning if 'C' command has inout after it
 #TODO handle multiple tables ie multiple I inputs - new table for each?
 #TODO test for 'S' input (another spec)
+#TODO descriptive error messages
 
 describe 'Processor' do
 
@@ -116,24 +117,24 @@ describe 'Processor' do
 	it 'should raise an error if "L" input is out of bounds' do
 		processor = Processor.new
 		processor.table = [['O','O'], ['O','O']]
-		expect(processor.process('L 3 2 X')).to eq('Error')
-		expect(processor.process('L 2 3 X')).to eq('Error')
+		expect{ processor.process('L 3 2 X') }.to raise_error('Error')
+		expect{ processor.process('L 2 3 X') }.to raise_error('Error')
 	end
 
 	it 'should raise an error if "V" input is out of bounds' do
 		processor = Processor.new
 		processor.table = [['O','O'], ['O','O']]
-		expect(processor.process('V 3 1 2 X')).to eq('Error')
-		expect(processor.process('V 1 3 2 X')).to eq('Error')
-		expect(processor.process('V 1 1 3 X')).to eq('Error')
+		expect{ processor.process('V 3 1 2 X') }.to raise_error('Error')
+		expect{ processor.process('V 1 3 2 X') }.to raise_error('Error')
+		expect{ processor.process('V 1 1 3 X') }.to raise_error('Error')
 	end
 
 	it 'should raise an error if "H" input is out of bounds' do
 		processor = Processor.new
 		processor.table = [['O','O'], ['O','O']]
-		expect(processor.process('H 3 1 2 X')).to eq('Error')
-		expect(processor.process('H 1 3 2 X')).to eq('Error')
-		expect(processor.process('H 1 2 3 X')).to eq('Error')
+		expect{ processor.process('H 3 1 2 X') }.to raise_error('Error')
+		expect{ processor.process('H 1 3 2 X') }.to raise_error('Error')
+		expect{ processor.process('H 1 2 3 X') }.to raise_error('Error')
 	end
 
 

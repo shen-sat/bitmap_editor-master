@@ -6,6 +6,9 @@ class Processor
 	end
 
 	def process(line)
+		if line[0] != 'I'
+			check_out_of_bounds(line)
+		end
 		case line[0]
 		when 'I'
 			number_of_columns = line.split(/ /)[1].to_i
@@ -16,17 +19,11 @@ class Processor
 				row.collect! { |pixel| pixel = 'O' }
 			end
 		when 'L'
-			if line.split(/ /)[1].to_i > @table[0].size || line.split(/ /)[2].to_i > @table.size
-				return 'Error'
-			end
 			column_index = line.split(/ /)[1].to_i - 1
 			row_index = line.split(/ /)[2].to_i - 1
 			color = line.split(/ /)[3] 
 			@table[row_index][column_index] = color
 		when 'V'
-			if line.split(/ /)[1].to_i > @table[0].size || line.split(/ /)[2].to_i > @table.size || line.split(/ /)[3].to_i > @table.size
-				return 'Error'
-			end
 			column_index = line.split(/ /)[1].to_i - 1
 			if line.split(/ /)[2].to_i < line.split(/ /)[3].to_i
 				row_index_start = line.split(/ /)[2].to_i - 1
@@ -38,9 +35,6 @@ class Processor
 			color = line.split(/ /)[4]
 			(row_index_start..row_index_finish).each { |row_index| @table[row_index][column_index] = color }
 		when 'H'
-			if line.split(/ /)[1].to_i > @table[0].size || line.split(/ /)[2].to_i > @table[0].size || line.split(/ /)[3].to_i > @table.size
-				return 'Error'
-			end
 			if line.split(/ /)[1].to_i < line.split(/ /)[2].to_i
 				column_index_start = line.split(/ /)[1].to_i - 1
 				column_index_finish = line.split(/ /)[2].to_i - 1
@@ -51,6 +45,25 @@ class Processor
 			row_index = line.split(/ /)[3].to_i - 1
 			color = line.split(/ /)[4]
 			(column_index_start..column_index_finish).each { |column_index| @table[row_index][column_index] = color }
+		end
+	end
+
+	def check_out_of_bounds(line)
+		row_limit = @table.size
+		column_limit = @table[0].size
+		case line[0]
+		when 'L'
+			if line.split(/ /)[1].to_i > column_limit || line.split(/ /)[2].to_i > row_limit
+				raise 'Error'
+			end
+		when 'H'
+			if line.split(/ /)[1].to_i > column_limit || line.split(/ /)[2].to_i > column_limit || line.split(/ /)[3].to_i > row_limit
+				raise 'Error'
+			end
+		when 'V'
+			if line.split(/ /)[1].to_i > column_limit || line.split(/ /)[2].to_i > row_limit || line.split(/ /)[3].to_i > row_limit
+				raise 'Error'
+			end
 		end
 	end
 end
