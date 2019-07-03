@@ -114,12 +114,20 @@ describe 'Processor' do
 	end
 
 	it 'should raise an error if "L" input is out of bounds' do
-		first_processor = Processor.new
-		second_processor = Processor.new
-		first_processor.process('I 4 5')
-		second_processor.process('I 5 4')
-		expect(first_processor.process('L 5 5 X')).to eq('Error')
-		expect(second_processor.process('L 5 5 X')).to eq('Error')
+		processor = Processor.new
+		processor.table = [['O','O'], ['O','O']]
+		expect(processor.process('L 3 2 X')).to eq('Error')
+		expect(processor.process('L 2 3 X')).to eq('Error')
 	end
+
+	it 'should raise an error if "V" input is out of bounds' do
+		processor = Processor.new
+		processor.table = [['O','O'], ['O','O']]
+		expect(processor.process('V 3 1 2')).to eq('Error')
+		expect(processor.process('V 1 3 2')).to eq('Error')
+		expect(processor.process('V 1 1 3')).to eq('Error')
+	end
+
+
 
 end

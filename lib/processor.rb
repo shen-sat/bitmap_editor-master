@@ -16,14 +16,17 @@ class Processor
 				row.collect! { |pixel| pixel = 'O' }
 			end
 		when 'L'
-			column_index = line.split(/ /)[1].to_i - 1
-			row_index = line.split(/ /)[2].to_i - 1
-			color = line.split(/ /)[3]
 			if line.split(/ /)[1].to_i > @table[0].size || line.split(/ /)[2].to_i > @table.size
 				return 'Error'
-			end 
+			end
+			column_index = line.split(/ /)[1].to_i - 1
+			row_index = line.split(/ /)[2].to_i - 1
+			color = line.split(/ /)[3] 
 			@table[row_index][column_index] = color
 		when 'V'
+			if line.split(/ /)[1].to_i > @table[0].size || line.split(/ /)[2].to_i > @table.size || line.split(/ /)[3].to_i > @table.size
+				return 'Error'
+			end
 			column_index = line.split(/ /)[1].to_i - 1
 			if line.split(/ /)[2].to_i < line.split(/ /)[3].to_i
 				row_index_start = line.split(/ /)[2].to_i - 1
@@ -32,7 +35,6 @@ class Processor
 				row_index_start = line.split(/ /)[3].to_i - 1
 				row_index_finish = line.split(/ /)[2].to_i - 1 
 			end 
-			
 			color = line.split(/ /)[4]
 			(row_index_start..row_index_finish).each { |row_index| @table[row_index][column_index] = color }
 		when 'H'
