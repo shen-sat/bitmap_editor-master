@@ -1,10 +1,10 @@
 require_relative '../lib/processor'
-#TODO lines are out-of-bounds
 #TODO what happens if I input is not first? If @table is empty, store commands, then run them at the end
 #TODO warning if 'C' command has inout after it
 #TODO handle multiple tables ie multiple I inputs - new table for each?
 #TODO test for 'S' input (another spec)
 #TODO descriptive error messages
+#TODO process input to turn numbers into numbers, maybe even turn them to read-able hashes?
 
 describe 'Processor' do
 
@@ -124,18 +124,42 @@ describe 'Processor' do
 	it 'should raise an error if "V" input is out of bounds' do
 		processor = Processor.new
 		processor.table = [['O','O'], ['O','O']]
-		expect{ processor.process('V 3 1 2 X') }.to raise_error('Error')
-		expect{ processor.process('V 1 3 2 X') }.to raise_error('Error')
-		expect{ processor.process('V 1 1 3 X') }.to raise_error('Error')
+		expect{ processor.check_out_of_bounds('V 3 1 2 X') }.to raise_error('Error')
+		expect{ processor.check_out_of_bounds('V 1 3 2 X') }.to raise_error('Error')
+		expect{ processor.check_out_of_bounds('V 1 1 3 X') }.to raise_error('Error')
 	end
 
 	it 'should raise an error if "H" input is out of bounds' do
 		processor = Processor.new
 		processor.table = [['O','O'], ['O','O']]
-		expect{ processor.process('H 3 1 2 X') }.to raise_error('Error')
-		expect{ processor.process('H 1 3 2 X') }.to raise_error('Error')
-		expect{ processor.process('H 1 2 3 X') }.to raise_error('Error')
+		expect{ processor.check_out_of_bounds('H 3 1 2 X') }.to raise_error('Error')
+		expect{ processor.check_out_of_bounds('H 1 3 2 X') }.to raise_error('Error')
+		expect{ processor.check_out_of_bounds('H 1 2 3 X') }.to raise_error('Error')
 	end
+
+	
+
+	context 'when calling the "process" method' do
+
+		it 'should not call the check_out_of_bounds method for "I" lines' do
+			processor = Processor.new
+			expect(processor).to_not receive(:check_out_of_bounds)
+			processor.process('I 5 6')
+		end
+
+		it 'should call the check_out_of_bounds method for non "I" lines' do
+			processor = Processor.new
+			processor.table = [['O','O'], ['O','O']]
+			expect(processor).to receive(:check_out_of_bounds).exactly(3).times
+			processor.process('V 1 1 2 X')
+			processor.process('H 1 2 1 X')
+			processor.process('L 1 1 X')
+		end
+
+
+	end
+
+	
 
 
 
